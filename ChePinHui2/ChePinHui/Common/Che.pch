@@ -1,0 +1,19 @@
+//
+//  Che.pch
+//  ChePinHui
+//
+//  Created by Anker Xiao on 16/7/11.
+//  Copyright © 2016年 AnkerXiao. All rights reserved.
+//
+
+#ifndef Che_pch
+#define Che_pch
+
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
+
+#define COMMON_PIC_API @"http://img.meichemeipin.com/mobile/data/afficheimg/"
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* Che_pch */

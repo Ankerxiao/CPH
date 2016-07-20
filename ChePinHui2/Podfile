@@ -1,0 +1,6 @@
+target ‘ChePinHui’ do
+    pod 'AFNetworking'
+    pod 'SDWebImage'
+    pod 'JSONModel'
+    pod 'MJRefresh'
+end

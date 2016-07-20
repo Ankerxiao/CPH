@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="GoodsCell">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kho-ag-kRV">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="156"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="156" id="sdo-AJ-cJW"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品名字" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GF8-4C-RKs">
+                        <rect key="frame" x="8" y="158" width="184" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="8yV-n8-z62"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品价格" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qlI-aq-ylz">
+                        <rect key="frame" x="8" y="181" width="184" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="OKp-DA-cGK"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Kho-ag-kRV" secondAttribute="trailing" id="6QH-Tp-zF7"/>
+                <constraint firstItem="GF8-4C-RKs" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="72V-0w-CZP"/>
+                <constraint firstItem="qlI-aq-ylz" firstAttribute="top" secondItem="GF8-4C-RKs" secondAttribute="bottom" constant="2" id="F3e-1V-grF"/>
+                <constraint firstItem="GF8-4C-RKs" firstAttribute="top" secondItem="Kho-ag-kRV" secondAttribute="bottom" constant="2" id="GD0-W7-Oax"/>
+                <constraint firstAttribute="trailing" secondItem="GF8-4C-RKs" secondAttribute="trailing" constant="8" id="K2h-VO-w22"/>
+                <constraint firstItem="Kho-ag-kRV" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="eXR-rn-AZX"/>
+                <constraint firstAttribute="trailing" secondItem="qlI-aq-ylz" secondAttribute="trailing" constant="8" id="f0l-yA-rt5"/>
+                <constraint firstItem="qlI-aq-ylz" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="iYZ-Og-fUb"/>
+                <constraint firstItem="Kho-ag-kRV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ii6-dj-rlY"/>
+            </constraints>
+            <size key="customSize" width="204" height="177"/>
+            <connections>
+                <outlet property="goodsImgV" destination="Kho-ag-kRV" id="23d-if-TkA"/>
+                <outlet property="goodsName" destination="GF8-4C-RKs" id="8tW-6k-6YW"/>
+                <outlet property="goodsPrice" destination="qlI-aq-ylz" id="AYz-wS-Gp2"/>
+            </connections>
+            <point key="canvasLocation" x="138" y="196"/>
+        </collectionViewCell>
+    </objects>
+</document>
