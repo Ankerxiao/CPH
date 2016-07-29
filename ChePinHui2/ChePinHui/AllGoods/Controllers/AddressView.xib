@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OrderVC">
+            <connections>
+                <outlet property="addressL" destination="3rh-vb-cNL" id="EGW-b9-Is9"/>
+                <outlet property="contentView" destination="ame-pw-Gok" id="XeC-mf-h4U"/>
+                <outlet property="contractL" destination="0ly-Tc-8Ju" id="Rq4-k0-KTq"/>
+                <outlet property="numberL" destination="gC6-ga-Qjr" id="qh6-bJ-8pJ"/>
+                <outlet property="otherAddr" destination="Vrk-4m-6TH" id="2hh-4J-9mY"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="ame-pw-Gok" customClass="UILabel">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ly-Tc-8Ju">
+                    <rect key="frame" x="23" y="19" width="148" height="38"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="38" id="caD-9X-1FQ"/>
+                        <constraint firstAttribute="width" constant="148" id="w4L-Ye-CJ0"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3rh-vb-cNL">
+                    <rect key="frame" x="23" y="71" width="216" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vrk-4m-6TH">
+                    <rect key="frame" x="264" y="62" width="74" height="30"/>
+                    <state key="normal" title="其他地址&gt;"/>
+                    <connections>
+                        <action selector="otherAddress:" destination="-1" eventType="touchUpInside" id="0Il-uf-x8X"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gC6-ga-Qjr">
+                    <rect key="frame" x="208" y="19" width="159" height="38"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="0ly-Tc-8Ju" firstAttribute="leading" secondItem="ame-pw-Gok" secondAttribute="leading" constant="23" id="481-H4-QgX"/>
+                <constraint firstItem="0ly-Tc-8Ju" firstAttribute="top" secondItem="ame-pw-Gok" secondAttribute="top" constant="19" id="Erc-1m-I1p"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-7.5" y="-86"/>
+        </view>
+    </objects>
+</document>

@@ -13,9 +13,11 @@
 #import <UIImageView+WebCache.h>
 #import "GoodsPicModel.h"
 #import "LoginVC.h"
+#import "OrderVC.h"
+#import "KeFuVC.h"
 
 #define SESSION_ID @"3334f8d6000d9a3db346e798615ebee2"
-#define API_SERVER @"http://10.11.57.27/mcmp1605/data_enter.php"
+#define API_SERVER @"http://127.0.0.1/mcmp1605/data_enter.php"
 #define GET_GOOD_INFO @"method=goods_info&goods_id=%@"
 #define ADD_CART_API @"method=add_cart&session_id=%@&goods_id=%@&goods_num=%ld"
 #define TO_COLLECT_GOODS @"method=collect_goods&session_id=%@&goods_id=%@"
@@ -79,6 +81,9 @@
 {
     UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, SCREEN_WIDTH/8, 44)];
     imageV.image = [UIImage imageNamed:@"goodskefu"];
+    imageV.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(kefu)];
+    [imageV addGestureRecognizer:tap];
     [_bottomView addSubview:imageV];
     
     //加入购物车
@@ -96,12 +101,20 @@
     [_bottomView addSubview:purchaseBtn];
 }
 
+- (void)kefu
+{
+    KeFuVC *kfvc = [[KeFuVC alloc] init];
+    
+    [self.navigationController pushViewController:kfvc animated:YES];
+}
+
 - (void)addCart
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     if([[ud objectForKey:@"Login"] isEqualToString:@"Logined"])
     {
         //请求数据，接口
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"update" object:nil userInfo:nil];
         [self addCartToServer];
     }
     else
@@ -181,9 +194,16 @@
     }
 }
 
+//购买按钮的点击方法
 - (void)purchase
 {
-    
+    GoodDetailModel *model = [[GoodDetailModel alloc] init];
+    model = _imageDataArray[0];
+    OrderVC *ovc = [[OrderVC alloc] init];
+    ovc.gdModel = model;
+    ovc.price = model.shop_price;
+    ovc.purchaseNum = [NSString stringWithFormat:@"%ld",_purchaseNum];
+    [self.navigationController pushViewController:ovc animated:YES];
 }
 
 #pragma mark 初始化整个ScrollView上的组件

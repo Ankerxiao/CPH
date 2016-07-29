@@ -112,6 +112,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="addBtn" destination="cbW-bG-z2Q" id="K9e-I3-jaG"/>
+                <outlet property="circleBtn" destination="1cU-0g-10V" id="SzW-zX-wu8"/>
                 <outlet property="desBtn" destination="3Rp-lO-69c" id="3Gk-9H-hsz"/>
                 <outlet property="imageV" destination="yhS-WY-7FK" id="2Ro-r2-eXX"/>
                 <outlet property="nameL" destination="lNV-KV-fQ1" id="65v-gw-nX5"/>

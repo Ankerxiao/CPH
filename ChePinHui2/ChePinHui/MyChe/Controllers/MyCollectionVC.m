@@ -13,7 +13,7 @@
 
 #define SCREENW [UIScreen mainScreen].bounds.size.width
 
-#define API_SERVER @"http://10.11.57.27/mcmp1605/data_enter.php"
+#define API_SERVER @"http://127.0.0.1/mcmp1605/data_enter.php"
 #define TO_COLLECT_GOODS @"method=collect_goods&session_id=%@&goods_id=%@"
 #define CANCEL_COLLECT_GOODS @"method=cancel_collect_goods&session_id=%@&goods_id=%@"
 #define ALL_COLLECT_GOODS @"method=all_collect_goods&session_id=%@"
@@ -40,11 +40,23 @@
     _dataArray = [NSMutableArray array];
     _backScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENW, SCREEN_HEIGHT-113)];
     _backScrollView.delegate = self;
-    [self.view addSubview:_backScrollView];
+//    [self.view addSubview:_backScrollView];
+    
+    //初始化收藏界面，去请求数据
+//    [self initCollectionView];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    for(UIView *vw in _backScrollView.subviews)
+    {
+        [vw removeFromSuperview];
+    }
     
     //初始化收藏界面，去请求数据
     [self initCollectionView];
-    
+    [self.view addSubview:_backScrollView];
 }
 
 - (void)initCollectionView
@@ -118,7 +130,8 @@
         [_backScrollView addSubview:vw];
         
     }
-    _backScrollView.contentSize = CGSizeMake(SCREENW, count*SCREEN_WIDTH/4+44);
+//    _backScrollView.contentSize = CGSizeMake(SCREENW, count*SCREEN_WIDTH/4+44);
+    _backScrollView.contentSize = CGSizeMake(SCREENW, ((count-1)/2+1)*SCREENW/2);
 }
 
 - (void)pressRight:(UIBarButtonItem *)barBtn
@@ -141,14 +154,23 @@
             UIImageView *imageV = [self.view viewWithTag:10+i];
             imageV.alpha = 0;
         }
-        _backScrollView.contentSize = CGSizeMake(SCREENW, (count%2+1)*SCREENW/2);
+        
     }
+//    _backScrollView.contentSize = CGSizeMake(SCREENW, (count%2+1)*SCREENW/2);
+    _backScrollView.contentSize = CGSizeMake(SCREENW, ((count-1)/2+1)*SCREENW/2);
 }
 
 - (void)pressX:(UITapGestureRecognizer *)tap
 {
     UIView *vw = tap.view.superview;
-    //更新收藏夹并且更新界面
+    
+    //1.将NSUserDefault中的“已收藏”更改为“收藏”
+    CartModel *model = _dataArray[tap.view.tag-10];
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:@"收藏" forKey:model.goods_id];
+    [ud synchronize];
+    
+    //2.更新收藏夹并且更新界面
     [self updateCollect:tap.view.tag];//从10开始的
     [self updateAllViews:tap.view.superview.tag];//从1000开始的
     [vw removeFromSuperview];

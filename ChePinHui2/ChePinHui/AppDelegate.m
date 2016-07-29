@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "TabBarC.h"
+#import "EMSDK.h"
 
 #import <SMS_SDK/SMSSDK.h>
 
@@ -34,6 +35,12 @@
     //短信验证码
     [SMSSDK registerApp:@"14f7ec0014118" withSecret:@"a2e246fa2136fab8ac2538fcffc48c16"];
     
+    
+    //环信推送
+    EMOptions *options = [EMOptions optionsWithAppkey:@"mengxinxianhai#myappone"];
+    options.apnsCertName = @"pushBook";
+    [[EMClient sharedClient] initializeSDKWithOptions:options];
+    
     return YES;
 }
 
@@ -52,10 +59,16 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    [[EMClient sharedClient] applicationDidEnterBackground:application];
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+
+    [[EMClient sharedClient] applicationWillEnterForeground:application];
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

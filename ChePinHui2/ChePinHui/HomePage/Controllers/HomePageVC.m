@@ -12,7 +12,10 @@
 #import "DataModel.h"
 #import "UIImageView+WebCache.h"
 #import "AdvCell.h"
-#define API_SERVER @"http://10.11.57.27/mcmp1605/data_enter.php"
+#import "GoodsVC.h"
+#import "GoodsDetailVC.h"
+
+#define API_SERVER @"http://127.0.0.1/mcmp1605/data_enter.php"
 #define GET_HOME_DATA @"method=home_info"
 #define GET_HOME_CAT_DATA @"method=home_good_info&cat_type=%ld&page_num=%ld"
 
@@ -87,6 +90,9 @@ static NSString *sectionViewID = @"sectionview";
 
 
 @property (nonatomic,strong)UIView *bottomLineV;
+@property (nonatomic,strong) UIImageView *imageV1;
+@property (nonatomic,strong) UIImageView *imageV2;
+@property (nonatomic,strong) UIImageView *imageV3;
 
 @property (nonatomic,assign)NSInteger collection1PageNum;
 @property (nonatomic,assign)NSInteger collection2PageNum;
@@ -140,7 +146,7 @@ static NSString *sectionViewID = @"sectionview";
     
     
     _btnListView = [[UIView alloc] initWithFrame:CGRectMake(0, SearchBar_H+ADScrollV_H, SCREEN_WIDTH, BTN_LIST_V_H)];
-    [_btnListView setBackgroundColor:[UIColor grayColor]];
+    [_btnListView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:_btnListView];
     
     
@@ -148,12 +154,26 @@ static NSString *sectionViewID = @"sectionview";
     _btn1.tag = 100;
     [_btn1 setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
     [_btn1 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    [_btn1 setTitle:@"气机油" forState:UIControlStateNormal];
-    _btn1.frame =CGRectMake(0, BTN_DISTANCE, BTN_W, BTN_H);
+    [_btn1 setTitle:@"汽机油" forState:UIControlStateNormal];
+    _btn1.frame =CGRectMake(-20, BTN_DISTANCE, BTN_W, BTN_H);
+    
     _btn1.selected = YES;
     [_btn1 addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
+    _imageV1 = [[UIImageView alloc] initWithFrame:CGRectMake(75, 15, 20, 30)];
+    if(_btn1.selected)
+    {
+        _imageV1.image = [UIImage imageNamed:@"qijiyou_h"];
+    }
+    else
+    {
+        _imageV1.image = [UIImage imageNamed:@"qijiyou_n"];
+    }
+//    _imageV1.image = [UIImage imageNamed:@"qijiyou_h"];
+//    [_btn1 setBackgroundImage:[UIImage imageNamed:@"qijiyou_h"] forState:UIControlStateSelected];
+//    [_btn1 setBackgroundImage:[UIImage imageNamed:@"qijiyou_n"] forState:UIControlStateNormal];
     [_btnListView addSubview:_btn1];
     
+    [_btnListView addSubview:_imageV1];
     
     
     //加上滚动条
@@ -165,22 +185,27 @@ static NSString *sectionViewID = @"sectionview";
     _btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
     _btn2.tag = 101;
     [_btn2 setTitle:@"柴机油" forState:UIControlStateNormal];
-    _btn2.frame =CGRectMake(BTN_W+BTN_DISTANCE, BTN_DISTANCE, BTN_W, BTN_H);
+    _btn2.frame =CGRectMake(BTN_W+BTN_DISTANCE-20, BTN_DISTANCE, BTN_W, BTN_H);
     [_btn2 setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
     [_btn2 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [_btn2 addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
     [_btnListView addSubview:_btn2];
+    _imageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(75+BTN_W+BTN_DISTANCE, 15, 20, 30)];
+    _imageV2.image = [UIImage imageNamed:@"caijiyou_n"];
+    [_btnListView addSubview:_imageV2];
     
     
     _btn3 = [UIButton buttonWithType:UIButtonTypeCustom];
     _btn3.tag = 102;
     [_btn3 setTitle:@"品牌" forState:UIControlStateNormal];
-    _btn3.frame =CGRectMake(BTN_W*2+BTN_DISTANCE*2, BTN_DISTANCE, BTN_W, BTN_H);
+    _btn3.frame =CGRectMake(BTN_W*2+BTN_DISTANCE*2-20, BTN_DISTANCE, BTN_W, BTN_H);
     [_btn3 setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
     [_btn3 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [_btn3 addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
     [_btnListView addSubview:_btn3];
-    
+    _imageV3 = [[UIImageView alloc] initWithFrame:CGRectMake(75+(BTN_W+BTN_DISTANCE)*2, 15, 20, 30)];
+    _imageV3.image = [UIImage imageNamed:@"pinpai_n"];
+    [_btnListView addSubview:_imageV3];
     
     
     _collectionsScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, SearchBar_H+ADScrollV_H+BTN_LIST_V_H, SCREEN_WIDTH, SCREEN_HEIGHT-(SearchBar_H+ADScrollV_H+BTN_LIST_V_H)-64-49+SearchBar_H+ADScrollV_H)];
@@ -244,7 +269,7 @@ static NSString *sectionViewID = @"sectionview";
 //method=home_good_info&cat_type=%ld&page_num=%ld
 - (void)upRefeshData:(NSInteger)type andPageNumber:(NSInteger)page
 {
-    NSString* urlStr = @"http://10.11.57.27/mcmp1605/data_enter.php?method=home_good_info&cat_type=%ld&page_num=%ld";
+    NSString* urlStr = @"http://127.0.0.1/mcmp1605/data_enter.php?method=home_good_info&cat_type=%ld&page_num=%ld";
     urlStr = [NSString stringWithFormat:urlStr,type,page];
     
     AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
@@ -286,7 +311,7 @@ static NSString *sectionViewID = @"sectionview";
 
 - (void)loadData
 {
-    NSString* urlStr = @"http://10.11.57.27/mcmp1605/data_enter.php?method=home_info";
+    NSString* urlStr = @"http://127.0.0.1/mcmp1605/data_enter.php?method=home_info";
     AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
     sessionManager.requestSerializer = [AFHTTPRequestSerializer serializer];
     sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -372,7 +397,30 @@ static NSString *sectionViewID = @"sectionview";
     
     btn.selected = YES;
     
-    
+    if(_btn1.selected)
+    {
+        _imageV1.image = [UIImage imageNamed:@"qijiyou_h"];
+    }
+    else
+    {
+        _imageV1.image = [UIImage imageNamed:@"qijiyou_n"];
+    }
+    if(_btn2.selected)
+    {
+        _imageV2.image = [UIImage imageNamed:@"caijiyou_h"];
+    }
+    else
+    {
+        _imageV2.image = [UIImage imageNamed:@"caijiyou_n"];
+    }
+    if(_btn3.selected)
+    {
+        _imageV3.image = [UIImage imageNamed:@"pinpai_h"];
+    }
+    else
+    {
+        _imageV3.image = [UIImage imageNamed:@"pinpai_n"];
+    }
     //移动红色滚动条
     [UIView animateWithDuration:0.5 animations:^{
         _bottomLineV.frame = CGRectMake(btn.frame.origin.x,_btnListView.frame.size.height-2, BTN_W, 2);
@@ -451,6 +499,25 @@ static NSString *sectionViewID = @"sectionview";
     return CGSizeMake(SCREEN_WIDTH, 100);
 }
 
+#pragma mark 选中某个item
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if([collectionView isEqual:_collectionV1])
+    {
+        GoodsData *data = _cat1Array[indexPath.item];
+        GoodsDetailVC *vc = [[GoodsDetailVC alloc] init];
+        vc.goodsID = data.goods_id;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if([collectionView isEqual:_collectionV2])
+    {
+        GoodsData *data = _cat2Array[indexPath.item];
+        GoodsDetailVC *vc = [[GoodsDetailVC alloc] init];
+        vc.goodsID = data.goods_id;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
 
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -465,6 +532,33 @@ static NSString *sectionViewID = @"sectionview";
         
         UIButton *btn = [_btnListView viewWithTag:100+collectIndex];
         btn.selected = YES;
+        
+        
+        if(_btn1.selected)
+        {
+            _imageV1.image = [UIImage imageNamed:@"qijiyou_h"];
+        }
+        else
+        {
+            _imageV1.image = [UIImage imageNamed:@"qijiyou_n"];
+        }
+        if(_btn2.selected)
+        {
+            _imageV2.image = [UIImage imageNamed:@"caijiyou_h"];
+        }
+        else
+        {
+            _imageV2.image = [UIImage imageNamed:@"caijiyou_n"];
+        }
+        if(_btn3.selected)
+        {
+            _imageV3.image = [UIImage imageNamed:@"pinpai_h"];
+        }
+        else
+        {
+            _imageV3.image = [UIImage imageNamed:@"pinpai_n"];
+        }
+
         
         //移动红色滚动条
         [UIView animateWithDuration:0.3 animations:^{
@@ -503,6 +597,8 @@ static NSString *sectionViewID = @"sectionview";
         [UIView commitAnimations];
     }
 }
+
+
 
 //本人代码
 //- (UITableView *)tableV

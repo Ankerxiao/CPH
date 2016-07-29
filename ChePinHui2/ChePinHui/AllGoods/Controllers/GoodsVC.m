@@ -17,7 +17,7 @@
 
 
 
-#define API_SERVER @"http://10.11.57.27/mcmp1605/data_enter.php"
+#define API_SERVER @"http://127.0.0.1/mcmp1605/data_enter.php"
 #define GET_HOME_DATA @"method=home_info"
 #define GET_HOME_CAT_DATA @"method=home_good_info&cat_type=%ld&page_num=%ld"
 

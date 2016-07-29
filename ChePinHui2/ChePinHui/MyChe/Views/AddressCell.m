@@ -12,6 +12,8 @@
     BOOL _isFirst;
     UIButton *_gBtn;
 }
+
+
 @property (weak, nonatomic) IBOutlet UILabel *recipients;
 @property (weak, nonatomic) IBOutlet UILabel *num;
 @property (weak, nonatomic) IBOutlet UILabel *detailAddress;
@@ -29,40 +31,40 @@
 
 - (void)updateContentInCell:(NSDictionary *)dictAddress
 {
+    self.addressDict = dictAddress;
     self.recipients.text = dictAddress[@"consignee"];
     self.num.text = dictAddress[@"mobile"];
     self.detailAddress.text = [NSString stringWithFormat:@"%@ %@ %@ %@",dictAddress[@"province"],dictAddress[@"city"],dictAddress[@"district"],dictAddress[@"address_detail"]];
-
 }
 
 - (IBAction)isSelectBtn:(id)sender
 {
-    static BOOL isFirst = YES;
-    if(isFirst)
+    if(self.defaultBtn.selected == YES)
     {
-        _gBtn = (UIButton *)sender;
-        isFirst = NO;
-    }
-    else
-    {
-        _gBtn.selected = NO;
+        return;
     }
     
-    UIButton *btn = (UIButton *)sender;
-    btn.selected = YES;
-    _gBtn = btn;
+    //self.defaultBtn.selected = YES;
+    if([_delegate respondsToSelector:@selector(setDefaultAddress: andCurrentButton:)])
+    {
+        [_delegate setDefaultAddress:_addressDict andCurrentButton:sender];
+    }
+    return;
 }
 
 - (IBAction)edit:(id)sender
 {
-    
+    if([_delegate respondsToSelector:@selector(editAddress:)])
+    {
+        [_delegate editAddress:_addressDict];
+    }
 }
 
 - (IBAction)delete:(id)sender
 {
-    if([_delegate respondsToSelector:@selector(deleteAddress)])
+    if([_delegate respondsToSelector:@selector(deleteAddress:)])
     {
-        [_delegate deleteAddress];
+        [_delegate deleteAddress:_addressDict];
     }
 }
 

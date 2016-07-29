@@ -11,7 +11,7 @@
 #import "NetManager.h"
 #import "MyCheVC.h"
 
-#define API_SERVER @"http://10.11.57.27/mcmp1605/data_enter.php"
+#define API_SERVER @"http://127.0.0.1/mcmp1605/data_enter.php"
 #define USER_LOGIN @"method=user_login&tel=%@&pass=%@"
 
 @interface LoginVC ()

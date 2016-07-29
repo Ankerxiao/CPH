@@ -12,11 +12,17 @@
 
 @optional
 - (void)passValue;
-- (void)deleteAddress;
+- (void)deleteAddress:(NSDictionary *)dict;
+- (void)editAddress:(NSDictionary *)dict;
+- (void)setDefaultAddress:(NSDictionary *)dict andCurrentButton:(UIButton *)button;
 
 @end
 
 @interface AddressCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIButton *defaultBtn;
 @property (nonatomic,weak) id <AddressCellDelegate> delegate;
+@property (nonatomic,copy) NSDictionary *addressDict;
 - (void)updateContentInCell:(NSDictionary *)dictAddress;
+
+- (IBAction)isSelectBtn:(id)sender;
 @end

@@ -22,7 +22,7 @@
                             <constraint firstAttribute="width" constant="150" id="yfq-62-xdD"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CKE-Ts-kWr">
@@ -31,7 +31,7 @@
                             <constraint firstAttribute="width" constant="150" id="brU-aW-hpf"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUE-O7-zKr">
@@ -40,7 +40,7 @@
                             <constraint firstAttribute="width" constant="348" id="zUL-Pm-fgX"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="默认地址" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQ3-0i-9wm">
@@ -50,7 +50,7 @@
                             <constraint firstAttribute="width" constant="72" id="nHQ-aW-iqO"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7NB-7O-beb">
@@ -61,7 +61,7 @@
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <state key="normal" title="编辑" image="address_edit.png">
-                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                         <connections>
                             <action selector="edit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="95K-Vv-SfM"/>
@@ -112,11 +112,12 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="defaultBtn" destination="ri5-45-kyg" id="hYI-BN-9Yb"/>
                 <outlet property="detailAddress" destination="pUE-O7-zKr" id="Ifo-QR-Lz4"/>
                 <outlet property="num" destination="CKE-Ts-kWr" id="hAP-sC-EFk"/>
                 <outlet property="recipients" destination="yA6-Wo-iaO" id="BBd-Ik-14R"/>
             </connections>
-            <point key="canvasLocation" x="-8.5" y="116"/>
+            <point key="canvasLocation" x="-206.5" y="145"/>
         </tableViewCell>
     </objects>
     <resources>

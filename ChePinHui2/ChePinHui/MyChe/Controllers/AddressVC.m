@@ -12,7 +12,7 @@
 #import "NetManager.h"
 
 
-#define API_SERVER @"http://10.11.57.27/mcmp1605/data_enter.php"
+#define API_SERVER @"http://127.0.0.1/mcmp1605/data_enter.php"
 #define GET_DEFAULT_ADDRESS @"method=get_default_address&session_id=%@"
 #define GET_ALL_ADDRESS @"method=get_all_address&session_id=%@"
 #define DEL_ONE_ADDRESS @"method=delete_one_address&session_id=%@&address_id=%@"
@@ -22,8 +22,10 @@
 
 @interface AddressVC () <UITableViewDelegate,UITableViewDataSource,AddressCellDelegate>
 {
-    NSArray *_addressArray;
+    NSMutableArray *_addressArray;
+    NSString *defaultAddr;
 }
+//@property (nonatomic,strong) NSMutableArray *addressArray;
 @property (nonatomic,strong) UITableView *tableView;
 @end
 
@@ -50,9 +52,9 @@
 {
 //    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onClk:) name:@"A" object:nil];
     
+    //获取所有地址
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSString *str = [NSString stringWithFormat:GET_ALL_ADDRESS,[ud objectForKey:@"session"]];
-    
     NetManager *nm = [NetManager shareManager];
     [nm requestStrUrl:[NSString stringWithFormat:@"%@?%@",API_SERVER,str] withSuccessBlock:^(id data) {
         NSLog(@"%@",data);
@@ -60,7 +62,7 @@
         dispatch_async(dispatch_get_main_queue(),^{
             [self.tableView reloadData];
         });
-//        [self updateAddressView];
+        defaultAddr = data[@"data"][@"default_address_id"];
     } withFailedBlock:^(NSError *error) {
         
     }];
@@ -95,18 +97,17 @@
     
     
     //更新cell
-//    cell update
-    if(indexPath.row == 0)
+    if([_addressArray[indexPath.row][@"address_id"] isEqualToString:defaultAddr])
     {
         //默认地址
+        cell.defaultBtn.selected = YES;
+    }
+    else
+    {
+        cell.defaultBtn.selected = NO;
     }
     
     return cell;
-}
-
-- (void)deleteAddress
-{
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -118,6 +119,58 @@
 {
     return _addressArray.count;
 }
+
+#pragma mark AddressCell的代理方法
+- (void)deleteAddress:(NSDictionary *)dict
+{
+    NSMutableArray *copyArray = [NSMutableArray arrayWithArray:_addressArray];
+    for(NSDictionary *dic in copyArray)
+    {
+        if([dict[@"address_id"] isEqualToString:dic[@"address_id"]])
+        {
+            [copyArray removeObject:dic] ;
+            _addressArray = copyArray;
+            [self.tableView reloadData];
+            NetManager *nm = [NetManager shareManager];
+            NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+            NSString *str = [NSString stringWithFormat:DEL_ONE_ADDRESS,[ud objectForKey:@"session"],dict[@"address_id"]];
+            [nm requestStrUrl:[NSString stringWithFormat:@"%@?%@",API_SERVER,str] withSuccessBlock:^(id data) {
+                UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"提示" message:@"删除成功" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+                [ac addAction:cancel];
+                [self presentViewController:ac animated:YES completion:nil];
+            } withFailedBlock:^(NSError *error) {
+                
+            }];
+            break;
+        }
+    }
+}
+
+- (void)editAddress:(NSDictionary *)dict
+{
+    AddEditVC *aevc = [[AddEditVC alloc] init];
+    [aevc updateInfo:dict];
+    [self.navigationController pushViewController:aevc animated:YES];
+}
+
+- (void)setDefaultAddress:(NSDictionary *)dict andCurrentButton:(UIButton *)button
+{
+    NetManager *nm = [NetManager shareManager];
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSString *str = [NSString stringWithFormat:SET_DEFAULT_ADDRESS,[ud objectForKey:@"session"],dict[@"address_id"]];
+    [nm requestStrUrl:[NSString stringWithFormat:@"%@?%@",API_SERVER,str] withSuccessBlock:^(id data) {
+        defaultAddr = dict[@"address_id"];
+        NSLog(@"%@",dict[@"address_id"]);
+        [_tableView reloadData];
+        button.selected = YES;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateAddr" object:self userInfo:nil];
+    } withFailedBlock:^(NSError *error) {
+        
+    }];
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

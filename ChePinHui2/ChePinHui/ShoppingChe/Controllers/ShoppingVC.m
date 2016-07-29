@@ -11,9 +11,11 @@
 #import "NetManager.h"
 #import "CartModel.h"
 #import "CartCell.h"
+#import "GoodsDetailVC.h"
+#import "OrderVC.h"
 
 #define SESSION_ID @"2c0e89fc3c3b91afaa46becef9a0656f"
-#define API_SERVER @"http://10.11.57.27/mcmp1605/data_enter.php"
+#define API_SERVER @"http://127.0.0.1/mcmp1605/data_enter.php"
 #define GET_CART_INFO @"method=get_all_cart&session_id=%@"
 #define DELETE_SHOPPING @"method=cart_delete_goods&session_id=%@&goods_id=%@"
 
@@ -37,7 +39,7 @@
     _tableView.dataSource = self;
     [_tableView registerNib:[UINib nibWithNibName:@"CartCell" bundle:nil] forCellReuseIdentifier:@"cellID"];
     [self.view addSubview:_tableView];
-    
+    [self initCart];
     [self calculatePriceOfView];
 }
 
@@ -47,7 +49,7 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     if([[ud objectForKey:@"Login"] isEqualToString:@"Logined"])
     {
-        [self initCart];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCart) name:@"update" object:nil];
     }
     else
     {
@@ -56,6 +58,11 @@
         nav.navigationBar.barTintColor = [UIColor redColor];
         [self presentViewController:nav animated:YES completion:nil];
     }
+}
+
+- (void)updateCart
+{
+    [self initCart];
 }
 
 #pragma mark 初始化购物车，即是向服务器请求数据
@@ -116,7 +123,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"------");
+    CartModel *model = _dataArray[indexPath.row];
+    GoodsDetailVC *vc = [[GoodsDetailVC alloc] init];
+    vc.goodsID = model.goods_id;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -155,16 +165,36 @@
     NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:@"合计:￥0.00" attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}];
     label.attributedText = attr;
     label.tag = 10000;
-//    label.textColor = [UIColor whiteColor];
     [backView addSubview:label];
     
     UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100,0, 100, 60)];
     btn.backgroundColor = [UIColor redColor];
     [btn setTitle:@"去结算" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(goToClear) forControlEvents:UIControlEventTouchUpInside];
     [backView addSubview:btn];
     [self.view addSubview:backView];
-    
+}
+
+- (void)goToClear
+{
+    OrderVC *ovc = [[OrderVC alloc] init];
+//    ovc.dataArr = [NSMutableArray array];
+    float allPrice = 0;
+    //计算总价格
+    NSMutableArray *mutableArr = [NSMutableArray array];
+    for(CartModel *model in _dataArray)
+    {
+        if([model.isSelected isEqualToString:@"1"])
+        {
+            [mutableArr addObject:model];
+            allPrice += [model.goods_number integerValue]*[model.goods_price floatValue];
+        }
+    }
+    ovc.dataArr = mutableArr;
+    NSLog(@"%@",ovc.dataArr);
+    ovc.sumPrice = [NSString stringWithFormat:@"合计:￥%.2f",allPrice];
+    [self.navigationController pushViewController:ovc animated:YES];
 }
 
 - (void)updatePrice:(CartModel *)price

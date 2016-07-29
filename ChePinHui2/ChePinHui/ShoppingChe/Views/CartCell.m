@@ -10,7 +10,7 @@
 #import <UIImageView+WebCache.h>
 #import "NetManager.h"
 
-#define API_SERVER @"http://10.11.57.27/mcmp1605/data_enter.php"
+#define API_SERVER @"http://127.0.0.1/mcmp1605/data_enter.php"
 #define UPDATE_SHOPPING_NUM @"method=cart_update_num&session_id=%@&goods_id=%@&number=%@"
 
 @interface CartCell () <UITextFieldDelegate>
@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *desBtn;
 @property (weak, nonatomic) IBOutlet UITextField *numText;
 @property (weak, nonatomic) IBOutlet UIButton *addBtn;
+@property (weak, nonatomic) IBOutlet UIButton *circleBtn;
 
 @end
 
@@ -50,7 +51,14 @@
 {
     _purchaseNum = 0;
     _modelArray = [NSMutableArray array];
-    
+    if([model.isSelected isEqualToString:@"1"])
+    {
+        self.circleBtn.selected = YES;
+    }
+    else
+    {
+        self.circleBtn.selected = NO;
+    }
     
     _cartModel = model;
     [self.imageV sd_setImageWithURL:[NSURL URLWithString:model.goods_thumb]];
